@@ -8,26 +8,10 @@
             </a>
         </div>
         <div class="pageTitle">Edit Profile</div>
-        <div class="right"></div>
     </div>
 @endsection
 @section('content')
     <div class="row" style="margin-top: 4rem">
-        <div class="col">
-            @php
-                $messageSuccess = Session::get('success');
-                $messageError = Session::get('error');
-            @endphp
-            @if (Session::get('success'))
-                <div class="alert alert-success">
-                    {{ $messageSuccess }}
-                </div>
-            @elseif (Session::get('error'))
-                <div class="alert alert-danger">
-                    {{ $messageError }}
-                </div>
-            @endif
-        </div>
     </div>
     <form action="presensi/{{ $karyawan->nik }}/updateProfile" method="POST" enctype="multipart/form-data">
         @csrf
@@ -44,12 +28,13 @@
                         placeholder="No. HP" autocomplete="off">
                 </div>
             </div>
-            <div class="form-group boxed">
-                <div class="input-wrapper">
-                    <input type="password" class="form-control" name="password" placeholder="Password" autocomplete="off">
-                </div>
-            </div>
             <div class="custom-file-upload" id="fileUpload1">
+                <div class="card-body text-center">
+                    @if (!empty(Auth::guard('karyawan')->user()->foto))
+                        <img src="{{ asset('storage/public/uploads/karyawan/' . Auth::guard('karyawan')->user()->foto) }}"
+                            alt="avatar" class="img-fluid text-center" style="width: 150px;">
+                    @endif
+                </div>
                 <input type="file" name="foto" id="fileuploadInput" accept=".png, .jpg, .jpeg">
                 <label for="fileuploadInput">
                     <span>

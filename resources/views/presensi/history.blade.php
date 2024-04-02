@@ -48,7 +48,8 @@
                 <div class="col-12">
                     <div class="form-group">
                         <button class="btn btn-primary btn-block" id="getdata"><ion-icon
-                                name="search-outline"></ion-icon>Cari</button>
+                                name="search-outline"></ion-icon>Cari
+                        </button>
                     </div>
                 </div>
             </div>
@@ -61,6 +62,7 @@
 @push('myscript')
     <script>
         $(function() {
+            // 
             $("#getdata").click(function(e) {
                 var bulan = $("#bulan").val();
                 var tahun = $("#tahun").val();
@@ -74,7 +76,7 @@
                     },
                     cache: false,
                     success: function(respond) {
-                        console.log(respond);
+                        $("#showhistori").html(respond);
                     }
                 });
             });

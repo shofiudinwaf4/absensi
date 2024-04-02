@@ -39,8 +39,8 @@
         <div class="container container-tight py-4">
             <div class="text-center mb-4">
                 <a href="." class="navbar-brand navbar-brand-autodark">
-                    <img src="{{ asset('tabler-dev') }}/src/static/logo.svg" width="110" height="32"
-                        alt="Tabler" class="navbar-brand-image">
+                    <img src="{{ asset('assets/img/kreasiai.png') }}" width="110" height="32" alt="Tabler"
+                        class="navbar-brand-image"> Kreasi AI
                 </a>
             </div>
             <div class="card card-md">
@@ -62,9 +62,9 @@
                         <div class="mb-2">
                             <label class="form-label">
                                 Password
-                                <span class="form-label-description">
+                                {{-- <span class="form-label-description">
                                     <a href="./forgot-password.html">I forgot password</a>
-                                </span>
+                                </span> --}}
                             </label>
                             <div class="input-group input-group-flat">
                                 <input type="password" class="form-control" name="password" placeholder="Your password"

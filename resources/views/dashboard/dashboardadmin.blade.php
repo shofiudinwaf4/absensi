@@ -37,7 +37,8 @@
                                 </div>
                                 <div class="col">
                                     <div class="font-weight-medium">
-                                        132
+                                        {{ $jmlkaryawan->count() }}
+
                                     </div>
                                     <div class="text-secondary">
                                         Karyawan
@@ -87,21 +88,23 @@
                                     <span
                                         class="bg-info text-white avatar"><!-- Download SVG icon from http://tabler-icons.io/i/currency-dollar -->
                                         <svg xmlns="http://www.w3.org/2000/svg"
-                                            class="icon icon-tabler icon-tabler-medical-cross" width="24" height="24"
+                                            class="icon icon-tabler icon-tabler-file-filled" width="24" height="24"
                                             viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                             stroke-linecap="round" stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                             <path
-                                                d="M13 3a1 1 0 0 1 1 1v4.535l3.928 -2.267a1 1 0 0 1 1.366 .366l1 1.732a1 1 0 0 1 -.366 1.366l-3.927 2.268l3.927 2.269a1 1 0 0 1 .366 1.366l-1 1.732a1 1 0 0 1 -1.366 .366l-3.928 -2.269v4.536a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1v-4.536l-3.928 2.268a1 1 0 0 1 -1.366 -.366l-1 -1.732a1 1 0 0 1 .366 -1.366l3.927 -2.268l-3.927 -2.268a1 1 0 0 1 -.366 -1.366l1 -1.732a1 1 0 0 1 1.366 -.366l3.928 2.267v-4.535a1 1 0 0 1 1 -1h2z" />
+                                                d="M12 2l.117 .007a1 1 0 0 1 .876 .876l.007 .117v4l.005 .15a2 2 0 0 0 1.838 1.844l.157 .006h4l.117 .007a1 1 0 0 1 .876 .876l.007 .117v9a3 3 0 0 1 -2.824 2.995l-.176 .005h-10a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-14a3 3 0 0 1 2.824 -2.995l.176 -.005h5z"
+                                                stroke-width="0" fill="currentColor" />
+                                            <path d="M19 7h-4l-.001 -4.001z" stroke-width="0" fill="currentColor" />
                                         </svg>
                                     </span>
                                 </div>
                                 <div class="col">
                                     <div class="font-weight-medium">
-                                        132
+                                        {{ $rekapizin->jmlizin != null ? $rekapizin->jmlizin : 0 }}
                                     </div>
                                     <div class="text-secondary">
-                                        Karyawan Sakit
+                                        Karyawan Izin
                                     </div>
                                 </div>
                             </div>
@@ -116,29 +119,28 @@
                                     <span
                                         class="bg-warning text-white avatar"><!-- Download SVG icon from http://tabler-icons.io/i/currency-dollar -->
                                         <svg xmlns="http://www.w3.org/2000/svg"
-                                            class="icon icon-tabler icon-tabler-file-filled" width="24" height="24"
+                                            class="icon icon-tabler icon-tabler-medical-cross" width="24" height="24"
                                             viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                             stroke-linecap="round" stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                             <path
-                                                d="M12 2l.117 .007a1 1 0 0 1 .876 .876l.007 .117v4l.005 .15a2 2 0 0 0 1.838 1.844l.157 .006h4l.117 .007a1 1 0 0 1 .876 .876l.007 .117v9a3 3 0 0 1 -2.824 2.995l-.176 .005h-10a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-14a3 3 0 0 1 2.824 -2.995l.176 -.005h5z"
-                                                stroke-width="0" fill="currentColor" />
-                                            <path d="M19 7h-4l-.001 -4.001z" stroke-width="0" fill="currentColor" />
+                                                d="M13 3a1 1 0 0 1 1 1v4.535l3.928 -2.267a1 1 0 0 1 1.366 .366l1 1.732a1 1 0 0 1 -.366 1.366l-3.927 2.268l3.927 2.269a1 1 0 0 1 .366 1.366l-1 1.732a1 1 0 0 1 -1.366 .366l-3.928 -2.269v4.536a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1v-4.536l-3.928 2.268a1 1 0 0 1 -1.366 -.366l-1 -1.732a1 1 0 0 1 .366 -1.366l3.927 -2.268l-3.927 -2.268a1 1 0 0 1 -.366 -1.366l1 -1.732a1 1 0 0 1 1.366 -.366l3.928 2.267v-4.535a1 1 0 0 1 1 -1h2z" />
                                         </svg>
                                     </span>
                                 </div>
                                 <div class="col">
                                     <div class="font-weight-medium">
-                                        132
+                                        {{ $rekapizin->jmlsakit != null ? $rekapizin->jmlsakit : 0 }}
                                     </div>
                                     <div class="text-secondary">
-                                        Karyawan Izin
+                                        Karyawan Sakit
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="col-md-6 col-xl-2">
                     <div class="card card-sm">
                         <div class="card-body">

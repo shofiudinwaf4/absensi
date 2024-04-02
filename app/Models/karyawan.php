@@ -24,6 +24,7 @@ class karyawan extends Authenticatable
         'jabatan',
         'no_hp',
         'nik',
+        'kode_dept',
         'password',
     ];
 

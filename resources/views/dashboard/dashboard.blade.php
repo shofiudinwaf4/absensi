@@ -4,10 +4,13 @@
         <div id="user-detail">
             <div class="avatar">
                 @if (!empty(Auth::guard('karyawan')->user()->foto))
-                    @php
-                        $path = Storage::url('uploads/karyawan/' . Auth::guard('karyawan')->user()->foto);
-                    @endphp
-                    <img src="{{ url($path) }}" alt="avatar" class="imaged w48 rounded">
+                    {{-- @php
+                        $path = Storage::url('public/public/uploads/karyawan/' . Auth::guard('karyawan')->user()->foto);
+
+                    @endphp --}}
+                    {{-- <img src="{{ url($path) }}" alt="avatar" class="imaged w48 rounded"> --}}
+                    <img src="{{ asset('storage/public/uploads/karyawan/' . Auth::guard('karyawan')->user()->foto) }}"
+                        alt="avatar" class="imaged w48 rounded">
                 @endif
             </div>
             <div id="user-info">
@@ -23,7 +26,7 @@
                 <div class="list-menu">
                     <div class="item-menu text-center">
                         <div class="menu-icon">
-                            <a href="" class="green" style="font-size: 40px;">
+                            <a href="/Profile" class="green" style="font-size: 40px;">
                                 <ion-icon name="person-sharp"></ion-icon>
                             </a>
                         </div>
@@ -33,7 +36,7 @@
                     </div>
                     <div class="item-menu text-center">
                         <div class="menu-icon">
-                            <a href="" class="danger" style="font-size: 40px;">
+                            <a href="/presensi/izin" class="danger" style="font-size: 40px;">
                                 <ion-icon name="calendar-number"></ion-icon>
                             </a>
                         </div>
@@ -43,7 +46,7 @@
                     </div>
                     <div class="item-menu text-center">
                         <div class="menu-icon">
-                            <a href="" class="warning" style="font-size: 40px;">
+                            <a href="/presensi/history" class="warning" style="font-size: 40px;">
                                 <ion-icon name="document-text"></ion-icon>
                             </a>
                         </div>
@@ -72,16 +75,18 @@
                     <div class="card gradasigreen">
                         <div class="card-body">
                             <div class="presencecontent">
-                                <div class="iconpresence">
-                                    @if ($presensiHariIni != null)
-                                        @php
+                                {{-- <div class="iconpresence">
+                                    @if ($presensiHariIni != null) --}}
+                                {{-- @php
                                             $path = Storage::url('uploads/absensi/' . $presensiHariIni->foto_in);
                                         @endphp
-                                        <img src="{{ url($path) }}" alt="" class="imaged w64">
-                                    @else
+                                        <img src="{{ url($path) }}" alt="" class="imaged w64"> --}}
+                                {{-- <img src="{{ asset('storage/public/uploads/absensi/' . $presensiHariIni->foto_in) }}"
+                                    alt="" class="imaged w48"> --}}
+                                {{-- @else
                                         <ion-icon name="camera"></ion-icon>
                                     @endif
-                                </div>
+                                </div> --}}
                                 <div class="presencedetail">
                                     <h4 class="presencetitle">Masuk</h4>
                                     <span>{{ $presensiHariIni != null ? $presensiHariIni->jam_in : 'Belum Absen' }}</span>
@@ -94,16 +99,14 @@
                     <div class="card gradasired">
                         <div class="card-body">
                             <div class="presencecontent">
-                                <div class="iconpresence">
+                                {{-- <div class="iconpresence">
                                     @if ($presensiHariIni != null && $presensiHariIni->jam_out != null)
-                                        @php
-                                            $path = Storage::url('uploads/absensi/' . $presensiHariIni->foto_out);
-                                        @endphp
-                                        <img src="{{ url($path) }}" alt="" class="imaged w48">
+                                        <img src="{{ asset('storage/public/uploads/absensi/' . $presensiHariIni->foto_out) }}"
+                                            alt="" class="imaged w48">
                                     @else
                                         <ion-icon name="camera"></ion-icon>
                                     @endif
-                                </div>
+                                </div> --}}
                                 <div class="presencedetail">
                                     <h4 class="presencetitle">Pulang</h4>
                                     <span>{{ $presensiHariIni != null && $presensiHariIni->jam_out != null ? $presensiHariIni->jam_out : 'Belum Absen' }}</span>
@@ -118,45 +121,50 @@
         <div id="rekappresensi">
             <h3 class="text-center">Rekap Presensi Bulan {{ $namaBulan[$bulanIni] . ' ' . $tahunIni }} </h3>
             <div class="row">
-                <div class="col-3">
+                <div class="col-4">
                     <div class="card">
                         <div class="card-body text-center" style="padding: 12px 12px !important; line-height: 0.8rem">
                             <span class="badge bg-danger"
                                 style="position: absolute; top: 3px; right: 10px; font-size: 0.5rem; z-index: 999">{{ $rekapPresensi->jmlHadir }}</span>
                             <ion-icon name="accessibility-outline" style="font-size: 1.6rem;"
                                 class="text-primary mb-1"></ion-icon>
+                            <br>
                             <span>Hadir</span>
                         </div>
                     </div>
                 </div>
-                <div class="col-3">
+                @php
+                    $jml = $rekapizin->jmlizin + $rekapizin->jmlsakit;
+                @endphp
+                <div class="col-4">
                     <div class="card">
                         <div class="card-body text-center" style="padding: 12px 12px !important; line-height: 0.8rem">
                             <span class="badge bg-danger"
-                                style="position: absolute; top: 3px; right: 10px; font-size: 0.5rem; z-index: 999">0</span>
-                            <ion-icon name="reader-outline" style="font-size: 1.6rem;" class="text-success mb-1"></ion-icon>
+                                style="position: absolute; top: 3px; right: 10px; font-size: 0.5rem; z-index: 999">{{ $jml }}</span>
+                            <ion-icon name="reader-outline" style="font-size: 1.6rem;"
+                                class="text-success mb-1"></ion-icon><br>
                             <span>Izin</span>
                         </div>
                     </div>
                 </div>
-                <div class="col-3">
+                {{-- <div class="col-3">
                     <div class="card">
                         <div class="card-body text-center" style="padding: 12px 12px !important; line-height: 0.8rem">
                             <span class="badge bg-danger"
-                                style="position: absolute; top: 3px; right: 10px; font-size: 0.5rem; z-index: 999">0</span>
+                                style="position: absolute; top: 3px; right: 10px; font-size: 0.5rem; z-index: 999">{{ $rekapizin->jmlsakit }}</span>
                             <ion-icon name="medkit-outline" style="font-size: 1.6rem;"
                                 class="text-warning mb-1"></ion-icon>
                             <span>Sakit</span>
                         </div>
                     </div>
-                </div>
-                <div class="col-3">
+                </div> --}}
+                <div class="col-4">
                     <div class="card">
                         <div class="card-body text-center" style="padding: 12px 12px !important; line-height: 0.8rem">
                             <span class="badge bg-danger"
                                 style="position: absolute; top: 3px; right: 10px; font-size: 0.5rem; z-index: 999">{{ $rekapPresensi->jmlTerlambat }}</span>
                             <ion-icon name="alarm-outline" style="font-size: 1.6rem;"
-                                class="text-danger mb-1"></ion-icon>
+                                class="text-danger mb-1"></ion-icon><br>
                             <span>Telat</span>
                         </div>
                     </div>
@@ -183,7 +191,7 @@
             <div class="tab-content mt-2" style="margin-bottom:100px;">
                 <div class="tab-pane fade show active" id="home" role="tabpanel">
                     <ul class="listview image-listview">
-                        @foreach ($historyBulanIni as $d)
+                        {{-- @foreach ($historyBulanIni as $d)
                             @php
                                 $path = Storage::url('uploads/absensi/' . $d->foto_in);
                             @endphp
@@ -201,6 +209,45 @@
                                     </div>
                                 </div>
                             </li>
+                        @endforeach --}}
+                        <style>
+                            .historicontent {
+                                display: flex;
+                            }
+
+                            .datapresensi {
+                                margin-left: 10px;
+                            }
+                        </style>
+                        @foreach ($historyBulanIni as $hbi)
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="historicontent">
+                                        <div class="iconpresensi">
+                                            <ion-icon name="finger-print-outline" role="img"
+                                                class="md hydrated text-success" aria-label="image outline"
+                                                style="font-size: 38px"></ion-icon>
+                                        </div>
+                                        <div class="datapresensi">
+                                            <h3 style="line-height: 3px">{{ $hbi->nama_jam_kerja }}</h3>
+                                            <h4 style="margin:0px !important">
+                                                {{ date('d-m-Y', strtotime($hbi->tgl_presensi)) }}</h4>
+                                            <span>{!! $hbi->jam_in != null
+                                                ? date('H:i', strtotime($hbi->jam_in))
+                                                : '<span class="text-danger">Belum Absen</span> ?>' !!}
+                                            </span>
+                                            <span>{!! $hbi->jam_in != null
+                                                ? '- ' . date('H:i', strtotime($hbi->jam_in))
+                                                : '<span class="text-danger">- Belum Absen</span> ?>' !!}
+                                            </span>
+                                            <br>
+                                            <span>{!! date('H:i', strtotime($hbi->jam_in)) > date('H:i', strtotime($hbi->jam_masuk))
+                                                ? '<span class="text-danger">Terlambat</span>'
+                                                : '<span class="text-success">Tepat Waktu</span>' !!}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         @endforeach
                     </ul>
                 </div>
