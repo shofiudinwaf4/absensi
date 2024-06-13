@@ -129,7 +129,6 @@ class KonfigurasiController extends Controller
                 'kode_jam_kerja' => $kode_jam_kerja[$i]
             ];
         }
-
         try {
             Setjamkerja::insert($data);
             return \redirect('/karyawan')->with(['success' => 'Jam Kerja Berhasil Disetting']);

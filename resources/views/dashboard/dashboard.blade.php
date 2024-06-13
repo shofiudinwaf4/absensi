@@ -232,18 +232,37 @@
                                             <h3 style="line-height: 3px">{{ $hbi->nama_jam_kerja }}</h3>
                                             <h4 style="margin:0px !important">
                                                 {{ date('d-m-Y', strtotime($hbi->tgl_presensi)) }}</h4>
-                                            <span>{!! $hbi->jam_in != null
-                                                ? date('H:i', strtotime($hbi->jam_in))
-                                                : '<span class="text-danger">Belum Absen</span> ?>' !!}
+                                            <span>{!! $hbi->jam_in != null ? date('H:i', strtotime($hbi->jam_in)) : '<span class="text-danger">Belum Absen</span>' !!}
                                             </span>
-                                            <span>{!! $hbi->jam_in != null
-                                                ? '- ' . date('H:i', strtotime($hbi->jam_in))
-                                                : '<span class="text-danger">- Belum Absen</span> ?>' !!}
+                                            <span>{!! $hbi->jam_out != null
+                                                ? '- ' . date('H:i', strtotime($hbi->jam_out))
+                                                : '<span class="text-danger">- Belum Absen</span>' !!}
                                             </span>
-                                            <br>
-                                            <span>{!! date('H:i', strtotime($hbi->jam_in)) > date('H:i', strtotime($hbi->jam_masuk))
-                                                ? '<span class="text-danger">Terlambat</span>'
-                                                : '<span class="text-success">Tepat Waktu</span>' !!}</span>
+                                            <div class="mt-2" id="keterangan">
+                                                @php
+                                                    $jam_in = date('H:i', strtotime($hbi->jam_in));
+                                                    $jam_masuk = date('H:i', strtotime($hbi->jam_masuk));
+                                                    $jadwal_jam_masuk = $hbi->tgl_presensi . ' ' . $jam_masuk;
+                                                    $jam_presensi = $hbi->tgl_presensi . ' ' . $jam_in;
+                                                @endphp
+                                                @if ($jam_in > $jam_masuk)
+                                                    @php
+                                                        $jumlahterlambat = hitungjamterlambat(
+                                                            $jadwal_jam_masuk,
+                                                            $jam_presensi,
+                                                        );
+                                                        $jumlahterlambatdesimal = hitungjamterlambatdesimal(
+                                                            $jadwal_jam_masuk,
+                                                            $jam_presensi,
+                                                        );
+                                                    @endphp
+                                                    <span class="danger">Terlambat
+                                                        ({{ $jumlahterlambat }} Jam)
+                                                    </span>
+                                                @else
+                                                    <span style="color: green">Tepat Waktu</span>
+                                                @endif
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

@@ -35,6 +35,7 @@
                             alt="avatar" class="img-fluid text-center" style="width: 150px;">
                     @endif
                 </div>
+                <input type="hidden" name="old_foto" value="{{ $karyawan->foto }}">
                 <input type="file" name="foto" id="fileuploadInput" accept=".png, .jpg, .jpeg">
                 <label for="fileuploadInput">
                     <span>

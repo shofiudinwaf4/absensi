@@ -19,9 +19,26 @@
                         <br>
                         {{-- <small class="text-muted">{{ $b->jabatan }}</small> --}}
                     </div>
-                    <span class="badge {{ $h->jam_in < $h->jam_masuk ? 'bg-success' : 'bg-danger' }}">{{ $h->jam_in }}
-                    </span>
-                    <span class="badge bg-primary">{{ $h->jam_out }}</span>
+                    <div class="mt-2" id="keterangan">
+                        <h4>{{ $h->nama_jam_kerja }}</h4>
+                        @php
+                            $jam_in = date('H:i', strtotime($h->jam_in));
+                            $jam_masuk = date('H:i', strtotime($h->jam_masuk));
+                            $jadwal_jam_masuk = $h->tgl_presensi . ' ' . $jam_masuk;
+                            $jam_presensi = $h->tgl_presensi . ' ' . $jam_in;
+                        @endphp
+                        @if ($jam_in > $jam_masuk)
+                            @php
+                                $jumlahterlambat = hitungjamterlambat($jadwal_jam_masuk, $jam_presensi);
+                                $jumlahterlambatdesimal = hitungjamterlambatdesimal($jadwal_jam_masuk, $jam_presensi);
+                            @endphp
+                            <span class="danger">Terlambat
+                                ({{ $jumlahterlambat }} Jam)
+                            </span>
+                        @else
+                            <span style="color: green">Tepat Waktu</span>
+                        @endif
+                    </div>
                 </div>
             </div>
         </li>

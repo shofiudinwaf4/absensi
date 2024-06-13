@@ -179,6 +179,7 @@ class PresensiController extends Controller
         $nik = Auth::guard('karyawan')->user()->nik;
         $nama_lengkap = $request->nama_lengkap;
         $no_hp = $request->no_hp;
+        $old_foto = $request->old_foto;
         $karywan = DB::table('karyawan')->where('nik', $nik)->first();
         if ($request->hasFile('foto')) {
             $foto = $nik . "." . $request->file('foto')->getClientOriginalExtension();
@@ -199,12 +200,19 @@ class PresensiController extends Controller
                 'foto' => $foto
             ];
         }
+        // \dd($data, $old_foto);
         $update = DB::table('karyawan')->where('nik', $nik)
             ->update($data);
         if ($update) {
             if ($request->hasFile('foto')) {
                 $folderPath = "public/uploads/karyawan/";
-                $request->file('foto')->storeAs($folderPath, $foto);
+                $folderPathold = "public/uploads/karyawan/" . $old_foto;
+                if (file_exists($folderPathold)) {
+
+                    @unlink($folderPathold);
+                }
+                // Storage::delete($folderPathold);
+                $request->file('foto')->move($folderPath, $foto);
             }
             return Redirect('/profile')->with(['success' => 'Profile berhasil di update']);
         } else {
@@ -257,9 +265,10 @@ class PresensiController extends Controller
         $konfigurasi_kantor = DB::table('konfigurasi')->where('id', 1)->first();
         $nik = Auth::guard('karyawan')->user()->nik;
         $histori = DB::table('presensi')
+            ->leftJoin('jam_kerja', 'presensi.kode_jam_kerja', '=', 'jam_kerja.kode_jam_kerja')
+            ->where('nik', $nik)
             ->whereRaw('MONTH(tgl_presensi)="' . $bulan . '"')
             ->whereRaw('YEAR(tgl_presensi)="' . $tahun . '"')
-            ->where('nik', $nik)
             ->orderBy('tgl_presensi')->get();
         return view('presensi.gethistori', compact('histori', 'konfigurasi_kantor'));
     }

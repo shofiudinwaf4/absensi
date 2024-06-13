@@ -210,8 +210,8 @@
                                             <path d="M18 19a2 2 0 0 0 2 -2v-4l1 -1l-1 -1v-4a2 2 0 0 0 -2 -2" />
                                         </svg>
                                     </span>
-                                    <input type="text" name="nik" id="nik" class="form-control"
-                                        placeholder="NIK">
+                                    <input type="text" maxlength="5" name="nik" id="nik"
+                                        class="form-control" placeholder="NIK">
                                 </div>
                             </div>
                         </div>
@@ -328,6 +328,8 @@
 @push('myScript')
     <script>
         $(function() {
+            $('#nik').mask("00000");
+            $('#no_hp').mask("0000000000000");
             $('#btnTambahkaryawan').click(function() {
                 $("#modal-inputKaryawan").modal("show");
             });

@@ -64,7 +64,12 @@ class KaryawanController extends Controller
             }
         } catch (Exception $e) {
             //throw $th;
-            return Redirect::back()->with(['warning' => 'Data Gagal Disimpan']);
+            if ($e->getCode() == 23000) {
+                $message = "Data dengan NIK " . $nik . " Sudah Ada";
+            } else {
+                $message = "Hubungi IT!";
+            }
+            return Redirect::back()->with(['warning' => 'Data Gagal Disimpan' . $message]);
         }
     }
     public function edit(Request $request)
@@ -103,8 +108,12 @@ class KaryawanController extends Controller
                 if ($request->hasFile('foto')) {
                     $folderPath = "public/uploads/karyawan/";
                     $folderPathold = "public/uploads/karyawan/" . $old_foto;
-                    Storage::delete($folderPathold);
-                    $request->file('foto')->storeAs($folderPath, $foto);
+                    if (file_exists($folderPathold)) {
+
+                        @unlink($folderPathold);
+                    }
+                    // Storage::delete($folderPathold);
+                    $request->file('foto')->move($folderPath, $foto);
                 }
                 return Redirect::back()->with(['success' => 'Data Berhasil Diupdate']);
             }
