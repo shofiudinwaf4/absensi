@@ -40,7 +40,7 @@ Route::middleware(['auth:karyawan'])->group(function () {
     Route::post('/presensi/store', [PresensiController::class, 'store']);
 
     // edit profil
-    Route::get('/profile', [PresensiController::class, 'Profile']);
+    Route::get('/Profile', [PresensiController::class, 'Profile']);
     Route::get('/editProfile', [PresensiController::class, 'editProfile']);
     Route::get('/gantipassword', [PresensiController::class, 'gantipassword']);
     Route::post('/presensi/{nik}/updateProfile', [PresensiController::class, 'updateProfile']);

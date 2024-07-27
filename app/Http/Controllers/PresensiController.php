@@ -81,18 +81,18 @@ class PresensiController extends Controller
             ->where('hari', $namahari)->first();
         // cek jam kerja karyawan
         $cek = DB::table('presensi')->where('tgl_presensi', $tgl_presensi)->where('nik', $nik)->count();
-        // if ($cek > 0) {
-        //     $ket = "out";
-        // } else {
-        //     $ket = "in";
-        // }
-        // $image = $request->image;
-        // $folderPath = "public/uploads/absensi/";
-        // $formatName = $nik . "-" . $tgl_presensi . "-" . $ket;
-        // $image_parts = explode(";base64", $image);
-        // $image_base64 = base64_decode($image_parts[1]);
-        // $filename = $formatName . ".png";
-        // $file = $folderPath . $filename;
+        if ($cek > 0) {
+            $ket = "out";
+        } else {
+            $ket = "in";
+        }
+        $image = $request->image;
+        $folderPath = "public/uploads/absensi/";
+        $formatName = $nik . "-" . $tgl_presensi . "-" . $ket;
+        $image_parts = explode(";base64", $image);
+        $image_base64 = base64_decode($image_parts[1]);
+        $filename = $formatName . ".png";
+        $file = $folderPath . $filename;
         if ($radius > $konfigurasi_kantor->radius) {
             echo "error|maaf Anda berada diluar radius, jarak Anda " . $radius . " meter dari kantor|radius";
         } else {
@@ -103,13 +103,13 @@ class PresensiController extends Controller
                     $data_pulang = [
                         'nik' => $nik,
                         'jam_out' => $jam,
-                        // 'foto_out' => $filename,
+                        'foto_out' => $filename,
                         'lokasi_out' => $lokasi
                     ];
                     $update = DB::table('presensi')->where('tgl_presensi', $tgl_presensi)->where('nik', $nik)->update($data_pulang);
                     if ($update) {
                         echo "success|Terima kasih! Hati-hati di jalan|out";
-                        // Storage::put($file, $image_base64);
+                        Storage::put($file, $image_base64);
                     } else {
                         echo "error|Maaf sistem error, absen gagal, hubungi tim IT|out";
                     }
@@ -124,13 +124,13 @@ class PresensiController extends Controller
                         'nik' => $nik,
                         'tgl_presensi' => $tgl_presensi,
                         'jam_in' => $jam,
-                        // 'foto_in' => $filename,
+                        'foto_in' => $filename,
                         'lokasi_in' => $lokasi,
                         'kode_jam_kerja' => $jamkerja->kode_jam_kerja
                     ];
                     $simpan = DB::table('presensi')->insert($data);
                     if ($simpan) {
-                        // Storage::put($file, $image_base64);
+                        Storage::put($file, $image_base64);
                         echo "success|Terima Kasih, Selamat Bekerja|in";
                     } else {
                         echo "error|Maaf sistem error, absen gagal, hubungi tim IT|in";
@@ -214,9 +214,9 @@ class PresensiController extends Controller
                 // Storage::delete($folderPathold);
                 $request->file('foto')->move($folderPath, $foto);
             }
-            return Redirect('/profile')->with(['success' => 'Profile berhasil di update']);
+            return Redirect('/Profile')->with(['success' => 'Profile berhasil di update']);
         } else {
-            return Redirect('/profile')->with(['error' => 'Profile gagal di update']);
+            return Redirect('/Profile')->with(['error' => 'Profile gagal di update']);
         }
     }
     public function updatePassword(Request $request)
@@ -319,6 +319,8 @@ class PresensiController extends Controller
             ->whereRaw('MONTH(tgl_presensi)="' . $bulan . '"')
             ->whereRaw('YEAR(tgl_presensi)="' . $tahun . '"')
             ->orderBy('tgl_presensi')->get();
+        // dd($nik . $bulan, $tahun, $konfigurasi_kantor, $karyawan, $namaBulan, $presensi);
+
         return \view('presensi.cetaklaporan', \compact('bulan', 'tahun', 'namaBulan', 'karyawan', 'presensi', 'konfigurasi_kantor'));
     }
     public function rekap()

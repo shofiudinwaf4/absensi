@@ -11,6 +11,7 @@ class AuthController extends Controller
     //
     public function prosesLogin(Request $request)
     {
+        // \dd(Hash::make($request->password));
         if (Auth::guard('karyawan')->attempt(['nik' => $request->nik, 'password' => $request->password])) {
             return redirect('/dashboard');
         } else {

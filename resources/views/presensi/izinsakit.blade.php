@@ -220,7 +220,7 @@
                 <div class="modal-body">
                     <form action="/presensi/approveizinsakit" method="post">
                         @csrf
-                        <input type="hidden" id="id_izinsakit_form" name="id_izinsakit_form">
+                        <input type="text" id="id_izinsakit_form" name="id_izinsakit_form">
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group">

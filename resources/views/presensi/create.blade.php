@@ -54,10 +54,10 @@
     <div class="row" style="margin-top: 60px">
         <div class="col">
             <input type="hidden" id="lokasi">
-            <div id="map"></div>
-            {{-- <div class="webcam-capture"> --}}
+            <div class="webcam-capture">
+                <div id="map"></div>
+            </div>
         </div>
-    </div>
     </div>
     <div class="jam-digital-malasngoding">
         <p>{{ date('d-m-y') }}</p>
@@ -78,11 +78,11 @@
             @endif
         </div>
     </div>
-    {{-- <div class="row mt-2">
+    <div class="row mt-2">
         <div class="col">
             <div id="map"></div>
         </div>
-    </div> --}}
+    </div>
     {{-- notifikasi audio --}}
     <audio id="notifikasi_in">
         <source src="{{ asset('assets/sound/notifikasi_in.mp3') }}" type="audio/mp3">
@@ -99,14 +99,14 @@
         var notifikasi_in = document.getElementById('notifikasi_in') //variabel untuk notifikasi audio in
         var notifikasi_out = document.getElementById('notifikasi_out') //variabel untuk notifikasi audio out
         var notifikasi_radius = document.getElementById('notifikasi_radius') //variabel untuk notifikasi audio out
-        /*Webcam.set({
-                height: 480,
-                width: 640,
-                image_format: 'jpeg',
-                jpeg_quality: 80
-            });
+        Webcam.set({
+            height: 480,
+            width: 640,
+            image_format: 'jpeg',
+            jpeg_quality: 80
+        });
 
-            Webcam.attach('.webcam-capture');    */
+        Webcam.attach('.webcam-capture');
         var lokasi = document.getElementById('lokasi');
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
@@ -141,16 +141,16 @@
 
         }
         $("#takeabsen").click(function(e) {
-            // Webcam.snap(function(uri) {
-            //     image = uri;
-            // });
+            Webcam.snap(function(uri) {
+                image = uri;
+            });
             var lokasi = $("#lokasi").val();
             $.ajax({
                 type: 'POST',
                 url: '/presensi/store',
                 data: {
                     _token: "{{ csrf_token() }}",
-                    // image: image,
+                    image: image,
                     lokasi: lokasi,
                 },
                 cache: false,
